@@ -16,5 +16,7 @@ annotation class Logging(
      */
     val afterMillis: Long = -1,
 
-    val logLevel: Level = Level.INFO
+    val logLevel: Level = Level.INFO,
+
+    val logParams: Boolean = true
 )

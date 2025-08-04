@@ -38,4 +38,9 @@ class LoggingTest(@Autowired private val demoComponent: DemoComponent) {
     fun `level log`() {
         demoComponent.debugLevel()
     }
+
+    @Test
+    fun `log params`() {
+        demoComponent.logParams("1", "LOOOOL")
+    }
 }

@@ -31,4 +31,9 @@ open class DemoComponent {
     open fun debugLevel() {
         Thread.sleep(500)
     }
+
+    @Logging(logParams = true)
+    open fun logParams(param: String, param2: String) {
+        Thread.sleep(100)
+    }
 }
