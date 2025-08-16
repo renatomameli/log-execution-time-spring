@@ -8,7 +8,6 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy
 @AutoConfiguration
 @EnableAspectJAutoProxy
 open class LoggingAutoConfiguration {
-
     @Bean
     open fun loggingAspect() = LoggingAspect()
 }

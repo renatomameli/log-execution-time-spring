@@ -9,6 +9,12 @@ import org.slf4j.event.Level
 import java.lang.reflect.Method
 import kotlin.system.measureTimeMillis
 
+/**
+ * Aspect that intercepts methods annotated with [Logging].
+ *
+ * This aspect measures execution time, compares it against the threshold
+ * defined in the [Logging] annotation, and logs method details accordingly.
+ */
 @Aspect
 open class LoggingAspect {
 
@@ -23,9 +29,8 @@ open class LoggingAspect {
 
         val method = (joinPoint.signature as MethodSignature).method
         val annotation = method.getAnnotation(Logging::class.java)
-        val afterMillis = annotation.afterMillis
 
-        if (time > afterMillis) {
+        if (time > annotation.afterMillis && time <= annotation.beforeMillis) {
             log(method, time, annotation.logLevel, annotation.logParams, joinPoint.args)
         }
 
