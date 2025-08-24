@@ -22,8 +22,8 @@ class LoggingTest(@Autowired private val testLoggingComponent: TestLoggingCompon
     }
 
     @Test
-    fun `logs method execution when time exceeds threshold`(capture: CapturedOutput) {
-        testLoggingComponent.slowMethod("World")
+    fun `logs method execution when time exceeds afterMillis`(capture: CapturedOutput) {
+        testLoggingComponent.slowMethodLogAfterMillis("World")
 
         assertThat(capture.out).contains("executed in")
         assertThat(capture.out).contains("slowMethod")
@@ -31,9 +31,19 @@ class LoggingTest(@Autowired private val testLoggingComponent: TestLoggingCompon
     }
 
     @Test
-    fun `does not log when below threshold`(capture: CapturedOutput) {
-        testLoggingComponent.fastMethod(21)
+    fun `does not log when below afterMillis`(capture: CapturedOutput) {
+        testLoggingComponent.fastMethodLogAfterMillis(21)
 
         assertThat(capture.out).doesNotContain("fastMethod")
     }
+
+    @Test
+    fun `does not log when time exceeds beforeMillis`(capture: CapturedOutput) {
+        testLoggingComponent.slowMethodBeforeMillis()
+
+        assertThat(capture.out).doesNotContain("slowMethod")
+    }
+
+    // TODO Add test for is within beforeMillis
+    // Combine before and after millis
 }

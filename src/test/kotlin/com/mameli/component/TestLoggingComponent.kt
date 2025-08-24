@@ -10,14 +10,20 @@ open class TestLoggingComponent {
     open fun baseMethod() {
     }
 
-    @Logging(logParams = true)
-    open fun slowMethod(param: String): String {
-        Thread.sleep(50)
+    @Logging(afterMillis = 50)
+    open fun slowMethodLogAfterMillis(param: String): String {
+        Thread.sleep(51)
         return "Hello $param"
     }
 
-    @Logging(afterMillis = 500)
-    open fun fastMethod(x: Int): Int {
+    @Logging(afterMillis = 50)
+    open fun fastMethodLogAfterMillis(x: Int): Int {
         return x * 2
     }
+
+    @Logging(beforeMillis = 50)
+    open fun slowMethodBeforeMillis() {
+        Thread.sleep(51)
+    }
+
 }
