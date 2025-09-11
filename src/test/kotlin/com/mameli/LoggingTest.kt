@@ -1,5 +1,6 @@
 package com.mameli
 
+import com.mameli.component.TestLoggingClassAnnotatedComponent
 import com.mameli.component.TestLoggingComponent
 import com.mameli.config.LoggingAutoConfiguration
 import org.assertj.core.api.Assertions.assertThat
@@ -10,9 +11,12 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.system.CapturedOutput
 import org.springframework.boot.test.system.OutputCaptureExtension
 
-@SpringBootTest(classes = [LoggingAutoConfiguration::class, TestLoggingComponent::class])
+@SpringBootTest(classes = [LoggingAutoConfiguration::class, TestLoggingComponent::class, TestLoggingClassAnnotatedComponent::class])
 @ExtendWith(OutputCaptureExtension::class)
-class LoggingTest(@Autowired private val testLoggingComponent: TestLoggingComponent) {
+class LoggingTest(
+    @Autowired private val testLoggingComponent: TestLoggingComponent,
+    @Autowired private val testLoggingClassAnnotatedComponent: TestLoggingClassAnnotatedComponent
+) {
 
     @Test
     fun `basic logging test`(capture: CapturedOutput) {
@@ -42,6 +46,13 @@ class LoggingTest(@Autowired private val testLoggingComponent: TestLoggingCompon
         testLoggingComponent.slowMethodBeforeMillis()
 
         assertThat(capture.out).doesNotContain("slowMethod")
+    }
+
+    @Test
+    fun `class annotation`(capture: CapturedOutput) {
+        testLoggingClassAnnotatedComponent.baseMethod()
+
+        assertThat(capture.out).contains("executed in")
     }
 
     // TODO Add test for is within beforeMillis

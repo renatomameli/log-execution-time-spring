@@ -6,6 +6,8 @@ import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.reflect.MethodSignature
 import org.slf4j.LoggerFactory
 import org.slf4j.event.Level
+import org.springframework.aop.support.AopUtils
+import org.springframework.core.annotation.AnnotatedElementUtils
 import java.lang.reflect.Method
 import kotlin.system.measureTimeMillis
 
@@ -20,7 +22,7 @@ open class LoggingAspect {
 
     private val log = LoggerFactory.getLogger(this::class.java)
 
-    @Around("@annotation(com.mameli.Logging)")
+    @Around("@annotation(com.mameli.Logging) || @within(com.mameli.Logging)")
     fun logExecutionTime(joinPoint: ProceedingJoinPoint): Any? {
         var result: Any?
         val time = measureTimeMillis {
@@ -28,7 +30,8 @@ open class LoggingAspect {
         }
 
         val method = (joinPoint.signature as MethodSignature).method
-        val annotation = method.getAnnotation(Logging::class.java)
+        val classAnn = joinPoint.target.javaClass.getAnnotation(Logging::class.java)
+        val annotation = method.getAnnotation(Logging::class.java) ?: classAnn
 
         if (time > annotation.afterMillis && time <= annotation.beforeMillis) {
             log(method, time, annotation.logLevel, annotation.logParams, joinPoint.args)

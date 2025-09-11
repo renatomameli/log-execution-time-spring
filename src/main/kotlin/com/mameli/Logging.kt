@@ -23,7 +23,7 @@ import org.slf4j.event.Level
  * @property logLevel The logging level to be used (default is [Level.INFO]).
  * @property logParams Whether the parameter values should be logged (true) or just their types (false).
  */
-@Target(AnnotationTarget.FUNCTION)
+@Target(AnnotationTarget.FUNCTION, AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
 annotation class Logging(
     val beforeMillis: Long = Long.MAX_VALUE,
