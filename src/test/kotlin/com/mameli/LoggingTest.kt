@@ -17,42 +17,54 @@ class LoggingTest(
     @Autowired private val testLoggingComponent: TestLoggingComponent,
     @Autowired private val testLoggingClassAnnotatedComponent: TestLoggingClassAnnotatedComponent
 ) {
+    companion object {
+        private const val COMMON_LOG_MESSAGE = "executed in"
+    }
 
     @Test
     fun `basic logging test`(capture: CapturedOutput) {
         testLoggingComponent.baseMethod()
-
-        assertThat(capture.out).contains("executed in")
+        assertLog(capture)
     }
 
     @Test
     fun `logs method execution when time exceeds afterMillis`(capture: CapturedOutput) {
         testLoggingComponent.slowMethodLogAfterMillis("World")
 
-        assertThat(capture.out).contains("executed in")
-        assertThat(capture.out).contains("slowMethod")
+        assertLog(capture)
         assertThat(capture.out).contains("World")
     }
 
     @Test
     fun `does not log when below afterMillis`(capture: CapturedOutput) {
         testLoggingComponent.fastMethodLogAfterMillis(21)
-
-        assertThat(capture.out).doesNotContain("fastMethod")
+        assertNotLog(capture)
     }
 
     @Test
     fun `does not log when time exceeds beforeMillis`(capture: CapturedOutput) {
         testLoggingComponent.slowMethodBeforeMillis()
-
-        assertThat(capture.out).doesNotContain("slowMethod")
+        assertNotLog(capture)
     }
 
     @Test
     fun `class annotation`(capture: CapturedOutput) {
         testLoggingClassAnnotatedComponent.baseMethod()
+        assertLog(capture)
+    }
 
-        assertThat(capture.out).contains("executed in")
+    @Test
+    fun `logs if below beforeMillis`(capture: CapturedOutput) {
+        testLoggingComponent.fastMethodBeforeMillis()
+        assertLog(capture)
+    }
+
+    private fun assertLog(capture: CapturedOutput) {
+        assertThat(capture.out).contains(COMMON_LOG_MESSAGE)
+    }
+
+    private fun assertNotLog(capture: CapturedOutput) {
+        assertThat(capture.out).doesNotContain(COMMON_LOG_MESSAGE)
     }
 
     // TODO Add test for is within beforeMillis

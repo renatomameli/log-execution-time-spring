@@ -26,4 +26,8 @@ open class TestLoggingComponent {
         Thread.sleep(51)
     }
 
+    @Logging(beforeMillis = 50)
+    open fun fastMethodBeforeMillis() {
+    }
+
 }
