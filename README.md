@@ -4,10 +4,10 @@ A simple Kotlin-based library that uses AspectJ to log the execution time of ann
 
 ## Usage
 
-Annotate any method with `@LogExecutionTime` to log its runtime:
+Annotate any method with `@LogTime` to log its runtime:
 
 ```kotlin
-@Logging
+@LogTime
 fun doSomething() {
     // your code
 }

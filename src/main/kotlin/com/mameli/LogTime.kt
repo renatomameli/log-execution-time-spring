@@ -6,7 +6,7 @@ import org.slf4j.event.Level
 /**
  * Annotation used to log method execution details.
  *
- * Can be applied to functions, and the associated [LoggingAspect] will intercept the call.
+ * Can be applied to functions, and the associated [LogTimeAspect] will intercept the call.
  * You can configure the minimum execution time threshold, log level, and whether
  * method parameters should be included in the log output.
  *
@@ -25,7 +25,7 @@ import org.slf4j.event.Level
  */
 @Target(AnnotationTarget.FUNCTION, AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class Logging(
+annotation class LogTime(
     val beforeMillis: Long = Long.MAX_VALUE,
     val afterMillis: Long = -1,
     val logLevel: Level = Level.INFO,

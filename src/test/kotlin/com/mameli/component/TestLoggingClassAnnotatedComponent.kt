@@ -1,10 +1,10 @@
 package com.mameli.component
 
-import com.mameli.Logging
+import com.mameli.LogTime
 import org.springframework.stereotype.Component
 
 @Component
-@Logging
+@LogTime
 open class TestLoggingClassAnnotatedComponent {
 
     open fun baseMethod() {

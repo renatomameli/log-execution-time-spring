@@ -6,19 +6,17 @@ import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.reflect.MethodSignature
 import org.slf4j.LoggerFactory
 import org.slf4j.event.Level
-import org.springframework.aop.support.AopUtils
-import org.springframework.core.annotation.AnnotatedElementUtils
 import java.lang.reflect.Method
 import kotlin.system.measureTimeMillis
 
 /**
- * Aspect that intercepts methods annotated with [Logging].
+ * Aspect that intercepts methods annotated with [LogTime].
  *
  * This aspect measures execution time, compares it against the threshold
- * defined in the [Logging] annotation, and logs method details accordingly.
+ * defined in the [LogTime] annotation, and logs method details accordingly.
  */
 @Aspect
-open class LoggingAspect {
+open class LogTimeAspect {
 
     private val log = LoggerFactory.getLogger(this::class.java)
 
@@ -30,8 +28,8 @@ open class LoggingAspect {
         }
 
         val method = (joinPoint.signature as MethodSignature).method
-        val classAnn = joinPoint.target.javaClass.getAnnotation(Logging::class.java)
-        val annotation = method.getAnnotation(Logging::class.java) ?: classAnn
+        val classAnn = joinPoint.target.javaClass.getAnnotation(LogTime::class.java)
+        val annotation = method.getAnnotation(LogTime::class.java) ?: classAnn
 
         if (time > annotation.afterMillis && time <= annotation.beforeMillis) {
             log(method, time, annotation.logLevel, annotation.logParams, joinPoint.args)

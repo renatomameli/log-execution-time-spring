@@ -1,6 +1,6 @@
 package com.mameli.config
 
-import com.mameli.LoggingAspect
+import com.mameli.LogTimeAspect
 import org.springframework.boot.autoconfigure.AutoConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.EnableAspectJAutoProxy
@@ -9,5 +9,5 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy
 @EnableAspectJAutoProxy
 open class LoggingAutoConfiguration {
     @Bean
-    open fun loggingAspect() = LoggingAspect()
+    open fun loggingAspect() = LogTimeAspect()
 }
