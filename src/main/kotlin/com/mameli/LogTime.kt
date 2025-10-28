@@ -12,7 +12,7 @@ import org.slf4j.event.Level
  *
  * Example:
  * ```
- * @Logging(afterMillis = 500, logLevel = Level.DEBUG, logParams = false)
+ * @LogTime(afterMillis = 500, logLevel = Level.DEBUG, logParams = false)
  * fun someExpensiveMethod(input: String): String { ... }
  * ```
  *

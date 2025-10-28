@@ -2,7 +2,7 @@ package com.mameli
 
 import com.mameli.component.TestLoggingClassAnnotatedComponent
 import com.mameli.component.TestLoggingComponent
-import com.mameli.config.LoggingAutoConfiguration
+import com.mameli.config.LogTimeAutoConfiguration
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.system.CapturedOutput
 import org.springframework.boot.test.system.OutputCaptureExtension
 
-@SpringBootTest(classes = [LoggingAutoConfiguration::class, TestLoggingComponent::class, TestLoggingClassAnnotatedComponent::class])
+@SpringBootTest(classes = [LogTimeAutoConfiguration::class, TestLoggingComponent::class, TestLoggingClassAnnotatedComponent::class])
 @ExtendWith(OutputCaptureExtension::class)
 class LoggingTest(
     @Autowired private val testLoggingComponent: TestLoggingComponent,
